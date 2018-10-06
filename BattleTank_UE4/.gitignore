@@ -1,6 +1,9 @@
 #3d Models (Keeping this just in case, it's a good idea to upload the source material)
 # Models/*
 
+#WindowsNoEditor (The .exe game)
+WindowsNoEditor/*
+
 # Visual Studio 2015 user specific files
 .vs/
 
