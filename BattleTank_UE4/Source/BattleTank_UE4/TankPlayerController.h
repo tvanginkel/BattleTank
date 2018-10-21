@@ -17,8 +17,10 @@ class BATTLETANK_UE4_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+
 	ATank* GetControllerTank() const;
 
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 };
