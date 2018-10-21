@@ -5,12 +5,11 @@
 void  ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Begin Play"));
 
 	if (!GetControllerTank())
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController pawn not found"))
+		UE_LOG(LogTemp, Error, TEXT("TankPlayerController not possesing pawn"))
 	else
-		UE_LOG(LogTemp, Warning, TEXT("The name of the tank is: %s"), *(GetControllerTank()->GetName()))
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController possesing: %s"), *(GetControllerTank()->GetName()))
 	
 }
 
