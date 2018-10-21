@@ -13,14 +13,33 @@ void  ATankPlayerController::BeginPlay()
 	
 }
 
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	AimTowardsCrosshair();
+}
+
 ATank* ATankPlayerController::GetControllerTank() const
 {
 	return Cast<ATank>(GetPawn());
 }
 
-void ATankPlayerController::Tick(float DeltaTime)
+void ATankPlayerController::AimTowardsCrosshair()
 {
-	Super::Tick(DeltaTime);
+	if (!GetControllerTank()) { return; }
 
-	UE_LOG(LogTemp, Warning, TEXT("Tick is working"))
+	FVector OutHitLocation;
+
+	if (GetSightRayHitLocation(OutHitLocation))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OutHitLocation.ToString());
+	}
+
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	OutHitLocation = FVector(1.0);
+	return true;
 }
