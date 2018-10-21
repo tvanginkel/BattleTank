@@ -11,21 +11,31 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_UE4_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
+private:
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLoccation = 0.333333;
 
 	ATank* GetControllerTank() const;
 
-	virtual void BeginPlay() override;
 
-	virtual void Tick(float DeltaTime) override;
 
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+
+public:
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 
 };

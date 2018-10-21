@@ -2,6 +2,8 @@
 
 #include "TankPlayerController.h"
 
+
+//Called once at the beggining of the game 
 void  ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,11 +22,14 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
+//Returns ATank of the TankPlayerController
 ATank* ATankPlayerController::GetControllerTank() const
 {
 	return Cast<ATank>(GetPawn());
 }
 
+
+//Aims towards the current position of the Crosshair
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControllerTank()) { return; }
@@ -33,13 +38,21 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (GetSightRayHitLocation(OutHitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OutHitLocation.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OutHitLocation.ToString());
 	}
 
 }
 
+//Returns true if it hits landscape and changes the value of OutHitLocation.
+//Otherwise returns false
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-	OutHitLocation = FVector(1.0);
+
+	//Get Crosshair position in pixels
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLoccation );
+
+
 	return true;
 }
