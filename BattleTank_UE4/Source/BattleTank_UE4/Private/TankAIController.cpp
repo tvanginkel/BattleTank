@@ -8,9 +8,13 @@ void ATankAIController::BeginPlay()
 
 	//Protect GetPlayerTank()
 	if (!GetPlayerTank())
-		UE_LOG(LogTemp, Error, TEXT("Player not possesing tank"))
-	else
-		UE_LOG(LogTemp, Warning, TEXT("Player tank name: %s"), *GetPlayerTank()->GetName())
+		UE_LOG(LogTemp, Error, TEXT("AI not possesing tank"))
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	GetControllerTank()->AimAt(GetPlayerTank()->GetActorLocation());
 }
 
 ATank* ATankAIController::GetControllerTank() const
