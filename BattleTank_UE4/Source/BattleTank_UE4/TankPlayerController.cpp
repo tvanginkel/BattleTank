@@ -36,8 +36,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (GetSightRayHitLocation(OutHitLocation))
 		GetControllerTank()->AimAt(OutHitLocation);
-	else
-		UE_LOG(LogTemp, Warning, TEXT("OutHitLocation: Invalid Object"), )
 
 }
 
