@@ -4,13 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "Public/Tank.h" //Include to use ATank class
-#include "Engine/World.h" //Include to use GetWorld()
 #include "TankAIController.generated.h"
 
-/**
- * 
- */
+class ATank;
+
 UCLASS()
 class BATTLETANK_UE4_API ATankAIController : public AAIController
 {

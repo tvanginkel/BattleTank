@@ -1,17 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
 #include "CoreMinimal.h"
-#include "Public/Tank.h"
-#include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //Must be the last include
 
 
-/**
- * 
- */
+class ATank;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_UE4_API ATankPlayerController : public APlayerController
 {

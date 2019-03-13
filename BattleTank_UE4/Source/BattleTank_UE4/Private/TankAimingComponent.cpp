@@ -36,7 +36,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FVector OutLunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLunchVelocity, StartLocation, HitLocation, LaunchSpeed,ESuggestProjVelocityTraceOption::DoNotTrace))
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0,ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		FVector AimDirection = OutLunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
