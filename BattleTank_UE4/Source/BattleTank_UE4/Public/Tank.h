@@ -9,27 +9,39 @@
 
 class UTankBarrel;
 class UTankAimingComponent;
+class UTankTurret;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_UE4_API ATank : public APawn
 {
 	GENERATED_BODY()
+
 public:
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Action)
+	void Fire();
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret* BarretToSet);
+
 	UPROPERTY(EditAnywhere)
-	float LaunchSpeed = 100000; //TODO find sensible value
+	float LaunchSpeed = 10000; //TODO find sensible value
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-
+	UTankBarrel* Barrel = nullptr;
 
 	// Sets default values for this pawn's properties
 	ATank();

@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#include "TankPlayerController.h"
 #include "Tank.h"
 #include "Engine/World.h"
-#include "TankPlayerController.h"
+
 
 
 //Called once at the beggining of the game 
@@ -38,8 +38,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (GetSightRayHitLocation(OutHitLocation))
 		GetControllerTank()->AimAt(OutHitLocation);
-	else
-		UE_LOG(LogTemp, Warning, TEXT(" OUT OF LANDSCAPE"))
 
 }
 
