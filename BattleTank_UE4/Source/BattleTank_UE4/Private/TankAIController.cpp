@@ -8,24 +8,21 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Protect GetPlayerTank()
-	if (!GetPlayerTank())
-		UE_LOG(LogTemp, Error, TEXT("AI not possesing tank"))
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	GetControllerTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+	ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	ATank* AITank = Cast<ATank>(GetPawn());
+	
+	if (PlayerTank && AITank)
+	{
+		AITank->AimAt(PlayerTank->GetActorLocation());
+		AITank->Fire(); //TODO limit fire rate
+	}
+
 }
 
-ATank* ATankAIController::GetControllerTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-}
 

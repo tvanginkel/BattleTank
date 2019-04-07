@@ -14,9 +14,6 @@ class BATTLETANK_UE4_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 private:
-	
-	ATank* GetControllerTank() const;
-	ATank* GetPlayerTank() const;
 
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
