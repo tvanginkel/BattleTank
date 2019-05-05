@@ -11,6 +11,7 @@ class UTankBarrel;
 class UTankAimingComponent;
 class UTankTurret;
 class AProjectile;
+class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_UE4_API ATank : public APawn
@@ -21,24 +22,30 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Action)
+	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarretToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* BarretToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere)
-	float LaunchSpeed = 10000; //TODO find sensible value
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 15000; 
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	UTankBarrel* Barrel = nullptr;
@@ -49,11 +56,8 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
 };

@@ -26,8 +26,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	int32 LineTraceRange = 100000;
 
-
-
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;

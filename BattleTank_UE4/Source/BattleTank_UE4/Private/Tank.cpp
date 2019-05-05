@@ -3,6 +3,7 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 
 
@@ -13,6 +14,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
@@ -51,6 +53,7 @@ void ATank::Fire()
 
 	if (Barrel && isReloaded)
 	{
+		if (!ProjectileBlueprint) { return; }
 		//Spawn projectile at soket location
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			 ProjectileBlueprint,
