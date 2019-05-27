@@ -18,4 +18,10 @@ private:
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
+	//How close the tank can get
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000; // TODO find which unit it uses
+
+
+
 };
