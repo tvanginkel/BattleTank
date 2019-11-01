@@ -20,7 +20,7 @@ private:
 
 	//How close the tank can get
 	UPROPERTY(EditDefaultsOnly)
-	float AcceptanceRadius = 3000; // TODO find which unit it uses
+	float AcceptanceRadius = 3000; 
 
 
 

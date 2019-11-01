@@ -21,7 +21,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLoccation = 0.333333;
 
-	ATank* GetControllerTank() const;
+
 
 	UPROPERTY(EditAnywhere)
 	int32 LineTraceRange = 100000;
@@ -33,6 +33,10 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& WorldDirection) const;
 
 	bool GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const;
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControllerTank() const;
 
 public:
 

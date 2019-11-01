@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// No copyright
 
 #pragma once
 
@@ -17,19 +17,19 @@ class BATTLETANK_UE4_API UTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendMoveForward(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendRotateRight(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-	//TODO find best protection
+private:
+	//Called from the pathfinding logic by the AI Controllers
 	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
-private:
 	UTankTrack* RightTrack = nullptr;
 	UTankTrack* LeftTrack = nullptr; 
 

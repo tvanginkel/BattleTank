@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// No Copyright
 
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
@@ -34,6 +34,5 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	IntendRotateRight(RightThrow);
 	IntendMoveForward(ForwardThrow);
-	UE_LOG(LogTemp, Warning, TEXT(" Cross Product: %f"), RightThrow)
 }
 
