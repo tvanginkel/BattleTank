@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 UCLASS()
 class BATTLETANK_UE4_API ATankAIController : public AAIController
 {
@@ -21,6 +19,7 @@ private:
 	//How close the tank can get
 	UPROPERTY(EditDefaultsOnly)
 	float AcceptanceRadius = 3000; 
+
 
 
 

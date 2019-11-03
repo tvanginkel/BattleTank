@@ -25,30 +25,35 @@ class BATTLETANK_UE4_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+/*Variables*/
 public:	
-	// Sets default values for this component's properties
-	UTankAimingComponent();
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
-
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-
-protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EState State = EState::Aiming;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 15000;
 
 private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
+
+/*Functions*/
+public:
+	// Sets default values for this component's properties
+	UTankAimingComponent();
+
+	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+		
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		EState State = EState::Locked;
+
+private:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimDirection);
-
-		
-	
 };

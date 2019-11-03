@@ -1,18 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankPlayerController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
-
-
 
 //Called once at the beggining of the game 
 void  ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!GetControllerTank())
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController not possesing pawn"))
-	
+	if (!ensure(GetPawn())) { return; }
+
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
+	if (ensure(AimingComponent))
+	{
+		FoundAimingComponent(AimingComponent);
+	}		
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -22,22 +25,18 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-//Returns ATank of the TankPlayerController
-ATank* ATankPlayerController::GetControllerTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-
 //Aims towards the current position of the Crosshair
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControllerTank()) { return; }
-
+	if (!ensure(GetPawn())) { return; }
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	FVector OutHitLocation;
+	if (!ensure(AimingComponent)) { return; }
+
+
 
 	if (GetSightRayHitLocation(OutHitLocation))
-		GetControllerTank()->AimAt(OutHitLocation);
+		AimingComponent->AimAt(OutHitLocation);
 
 }
 
@@ -67,7 +66,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& OutHitLocation, FV
 	FVector EndLocation = StartLocation + (LookDirection * LineTraceRange);
 	FHitResult HitResult;
 	FCollisionQueryParams ColissionParam;
-	ColissionParam.AddIgnoredActor(GetControllerTank());
+	ColissionParam.AddIgnoredActor(GetPawn());
 
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, ColissionParam))
 	{

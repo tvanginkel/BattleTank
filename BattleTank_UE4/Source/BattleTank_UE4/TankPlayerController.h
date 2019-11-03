@@ -5,9 +5,11 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //Must be the last include
 
+class UTankAimingComponent;
 
-class ATank;
-
+/**
+Responsible for helping de player aim
+**/
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_UE4_API ATankPlayerController : public APlayerController
 {
@@ -21,8 +23,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLoccation = 0.333333;
 
-
-
 	UPROPERTY(EditAnywhere)
 	int32 LineTraceRange = 100000;
 
@@ -35,8 +35,9 @@ private:
 	bool GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControllerTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimComRef);
 
 public:
 

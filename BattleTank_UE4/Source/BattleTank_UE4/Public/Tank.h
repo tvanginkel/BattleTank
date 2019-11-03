@@ -8,10 +8,8 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
-class UTankAimingComponent;
 class UTankTurret;
 class AProjectile;
-class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_UE4_API ATank : public APawn
@@ -19,8 +17,6 @@ class BATTLETANK_UE4_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-
-	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
@@ -33,13 +29,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-
-
-protected:
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	UTankBarrel* Barrel = nullptr;

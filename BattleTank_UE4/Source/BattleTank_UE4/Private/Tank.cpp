@@ -2,8 +2,6 @@
 #include "Tank.h"
 #include "Engine/World.h"
 #include "TankBarrel.h"
-#include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Projectile.h"
 
 
@@ -12,7 +10,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	UE_LOG(LogTemp, Warning, TEXT("MONKEY: Tank Constructor"))
 
 }
 
@@ -21,29 +18,23 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!ProjectileBlueprint)
+	if (!ensure(ProjectileBlueprint))
 	{
+		return;
 		UE_LOG(LogTemp, Error, TEXT("Tank has no projectile blueprint"))
 	}
-	UE_LOG(LogTemp, Warning, TEXT("MONKEY: Tank BeginPlay()"))
-}
 
-
-// Called to bind functionality to input
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!TankAimingComponent) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) { return; }
+
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
-		if (!ProjectileBlueprint) { return; }
+		if (!ensure(ProjectileBlueprint)) { return; }
 		//Spawn projectile at soket location
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			 ProjectileBlueprint,
