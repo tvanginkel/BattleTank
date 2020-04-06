@@ -19,39 +19,45 @@ enum class EState : uint8
 
 class UTankBarrel; //Forward Declaration
 class UTankTurret;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_UE4_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-/*Variables*/
 public:	
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 15000;
 
-private:
-
-	UTankBarrel* Barrel = nullptr;
-	UTankTurret* Turret = nullptr;
-
-
-/*Functions*/
-public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		void Fire();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-		
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EState State = EState::Locked;
 
 private:
+
+	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
+	double LastFireTime = 0;
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

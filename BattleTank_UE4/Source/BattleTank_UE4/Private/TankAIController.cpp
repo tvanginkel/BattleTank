@@ -22,8 +22,8 @@ void ATankAIController::Tick(float DeltaTime)
 	MoveToActor(PlayerTank, AcceptanceRadius);
 	AIAimingComponent->AimAt(PlayerTank->GetActorLocation());
 	
-	//TODO fix firing
-	//GetPawn()->Fire(); 
+
+	AIAimingComponent->Fire(); 
 	
 
 }

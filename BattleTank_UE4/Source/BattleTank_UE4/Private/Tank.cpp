@@ -18,30 +18,5 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!ensure(ProjectileBlueprint))
-	{
-		return;
-		UE_LOG(LogTemp, Error, TEXT("Tank has no projectile blueprint"))
-	}
-
 }
 
-void ATank::Fire()
-{
-	if (!ensure(Barrel)) { return; }
-
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded)
-	{
-		if (!ensure(ProjectileBlueprint)) { return; }
-		//Spawn projectile at soket location
-		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
-			 ProjectileBlueprint,
-			 Barrel->GetSocketLocation(FName("Projectile")),
-			 Barrel->GetSocketRotation(FName("Projectile")));
-		
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
