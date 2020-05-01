@@ -50,16 +50,21 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EState State = EState::Locked;
+		EState State = EState::Reloading;
 
 private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	double LastFireTime = 0;
+	FVector AimDirection;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void BeginPlay() override;
+
+	bool IsBarrelMoving();
 
 	void MoveBarrelTowards(FVector AimDirection);
 };

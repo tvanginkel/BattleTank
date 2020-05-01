@@ -17,6 +17,12 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	//So the first fire is after reload
+	LastFireTime = FPlatformTime::Seconds();
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
@@ -28,7 +34,21 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		State = EState::Reloading;
+	} 
+	else
+	{
+		State = EState::Locked;
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("State: %s"), *State)
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	return !Barrel->GetForwardVector().Equals(AimDirection, 0.1);
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -45,11 +65,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		TArray<AActor*>(),
 		true*/))
 	{
-		FVector AimDirection = OutLunchVelocity.GetSafeNormal();
+		AimDirection = OutLunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 	}
 	
 }
+
+
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
@@ -68,9 +90,9 @@ void UTankAimingComponent::Fire()
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(ProjectileBlueprint)) { return; }
 
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	
 
-	if (isReloaded)
+	if (State != EState::Reloading)
 	{
 		if (!ensure(ProjectileBlueprint)) { return; }
 		//Spawn projectile at soket location
